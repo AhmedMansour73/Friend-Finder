@@ -6,23 +6,46 @@
     <!-- Sign Up Form
     ================================================= -->
     <div class="sign-up-form">
-      <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="Friend Finder"/></a>
+      <!-- <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="Friend Finder"/></a> -->
       <h2 class="text-white">Find My Friends</h2>
       <div class="line-divider"></div>
       <div class="form-wrapper">
         <p class="signup-text">Signup now and meet awesome people around the world</p>
-        <form action="#">
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
           <fieldset class="form-group">
-            <input type="email" class="form-control" id="example-email" placeholder="Enter email">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter email"
+              formControlName="email">
           </fieldset>
+
           <fieldset class="form-group">
-            <input type="password" class="form-control" id="example-password" placeholder="Enter a password">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Enter password"
+              formControlName="password">
           </fieldset>
+          <button
+            class="btn-secondary"
+            type="submit"
+            [disabled]="loginForm.invalid">
+            Login
+          </button>
+
         </form>
-        <p>By signning up you agree to the terms</p>
-        <button class="btn-secondary">Signup</button>
+        <div *ngIf="messageEn || messageAr" >
+          <p> error </p>
+          <p>{{messageEn}}</p>
+          <p>{{messageAr}}</p>
+        </div>
+
       </div>
-      <a routerLink="/sigin-up">Sign up</a>
+
+      <a routerLink="/signup">Sign up</a>
+
       <img class="form-shadow" src="assets/images/bottom-shadow.png" alt="" />
     </div><!-- Sign Up Form End -->
 

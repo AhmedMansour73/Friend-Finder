@@ -21,20 +21,25 @@ import { TimeLineProfileComponent } from './componants/time-lines/time-line-prof
 import { TimeLineDetailesComponent } from './componants/time-lines/time-line-detailes/time-line-detailes.component';
 import {RouterModule, Routes} from '@angular/router';
 import { LoginComponent } from './componants/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NoauthGuard } from 'src/service/guard/noauth.guard';
+import { AuthGuard } from 'src/service/guard/auth.guard';
 
 // http://localhost:4200
 
 const routes: Routes = [
-  {path: '', redirectTo:'MainPageComponent' , pathMatch: 'full'},
-  {path: 'sigin-up', component: SignUpComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'mainpage', component: MainPageComponent},
-  {path: 'contact', component: ContactComponent},
-  {path: 'timeline', component: TimeLineComponent},
-  {path: 'timeline-about', component: TimeAboutComponent},
-  {path: 'timeline-friends', component: TimeFriendsComponent},
-  {path: 'timeline-album', component: TimeAlbumComponent}, 
-  {path: '**', redirectTo:'MainPageComponent' , pathMatch: 'full'},
+  {path: 'signup', component: SignUpComponent, canActivate: [NoauthGuard] },
+  {path: 'login', component: LoginComponent, canActivate: [NoauthGuard] },
+
+  {path: '', redirectTo:'mainpage' , pathMatch: 'full', canActivate: [AuthGuard]},
+  {path: 'mainpage', component: MainPageComponent, canActivate: [AuthGuard]},
+  {path: 'contact', component: ContactComponent, canActivate: [AuthGuard]},
+  {path: 'timeline', component: TimeLineComponent, canActivate: [AuthGuard]},
+  {path: 'timeline-about', component: TimeAboutComponent, canActivate: [AuthGuard]},
+  {path: 'timeline-friends', component: TimeFriendsComponent, canActivate: [AuthGuard]},
+  {path: 'timeline-album', component: TimeAlbumComponent, canActivate: [AuthGuard]}, 
+  {path: '**', redirectTo:'mainpage' , pathMatch: 'full', canActivate: [AuthGuard]},
 ];
 
 @NgModule({
@@ -62,7 +67,9 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
